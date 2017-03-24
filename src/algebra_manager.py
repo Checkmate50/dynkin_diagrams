@@ -3,7 +3,7 @@ def describe_algebra(roots):
     Given a list of vectors 'roots'
     Generates a matrix describing the lie algebra with the given roots
 
-    :param basis:
+    :param roots:
     :return:
     """
 
