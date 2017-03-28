@@ -1,6 +1,7 @@
-def ddiagram(letter, number):
+def ddiagram(letter, number=-1):
     """
-    Given a dynkin diagram letter and order
+    Given a dynkin diagram letter and positive number
+    Or the letter and number as a single string
     Generates the string associated with that diagram
     Returns "invalid graph" if the input did not describe a possible graph
 
@@ -19,17 +20,20 @@ def ddiagram(letter, number):
 
     letter = str(letter).lower()
     number = int(number)
+    if number == -1:
+        number = int(letter[1:])
+        letter = letter[0]
     if letter not in ['a', 'b', 'c', 'd', 'e', 'f', 'g']:
-        return "invalid graph"
+        raise ValueError("invalid graph")
     if number <= 0:
-        return "invalid graph"
+        raise ValueError("invalid graph")
 
     if letter == "e" and (number > 8 or number < 3):
-        return "invalid graph"
+        raise ValueError("invalid graph")
     if letter == "f" and number != 4:
-        return "invalid graph"
+        raise ValueError("invalid graph")
     if letter == "g" and number != 2:
-        return "invalid graph"
+        raise ValueError("invalid graph")
 
     if number == 1:
         return "o"
@@ -54,8 +58,10 @@ def ddiagram(letter, number):
         if number == 3:
             return "o-o\no"
         if number == 4:
-            return "o-o-|"
-        return "o-o-|-" + ("o-"*(number-4))[:-1]
+            return "o-o-o-o"
+        if number == 5:
+            return "o-o-|-o"
+        return ("o-"*(number-4))[:-1] + "-|-o-o"
 
     if letter == "f":
         return "o-o=>o-o"
@@ -65,7 +71,7 @@ def ddiagram(letter, number):
 
 def cross(diagrams):
     """
-    Given a list of tuples (letter, order)
+    Given a list of tuples (letter, number) or strings
     Returns the string representation of crossing these diagrams
     Note that newlines deliminate new diagrams
 
@@ -75,7 +81,10 @@ def cross(diagrams):
 
     s = ""
     for diagram in diagrams:
-        s += ddiagram(*diagram) + "\n"
+        if isinstance(diagram, tuple):
+            s += ddiagram(*diagram) + "\n"
+        else:
+            s += ddiagram(diagram) + "\n"
     return s.strip()
 
 
