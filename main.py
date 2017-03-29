@@ -1,10 +1,11 @@
-from src import diagram_manager
-from src import cartan_generator
+from src.diagram_manager import *
+from src.cartan_generator import *
+from src.algebra_manager import *
+import numpy as np
 
 
 def main():
-    print(diagram_manager.ddiagram("D", 6))
-    print(cartan_generator.gen_cartan([[0, 1], [1, 0]]))
+    pass
 
 
 if __name__ == "__main__":
